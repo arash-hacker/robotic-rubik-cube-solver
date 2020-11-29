@@ -850,26 +850,25 @@ def detect_turn_good_corner():
 
 def swap_corners():
     
-    draw()
     while count_correct_corners()!=4:
         if count_correct_corners()==0:
             do_rotations(["D","L","D'","R'","D","L'","D'","R"])
         elif count_correct_corners()==1:
             detect_turn_good_corner()
 
-    while cube[3,3]=="D1":
+    while cube[3,3]!="D1":
         do_rotations(["D","D"])
         do_rotations(["L'","U'","L","U"])
         do_rotations(["D'","D'"])
-    while cube[3,5]=="D3":
+    while cube[3,5]!="D3":
         do_rotations(["D"])
         do_rotations(["L'","U'","L","U"])
         do_rotations(["D'"])
-    while cube[5,3]=="D7":
+    while cube[5,3]!="D7":
         do_rotations(["D'"])
         do_rotations(["L'","U'","L","U"])
         do_rotations(["D"])
-    while cube[5,5]=="D9":
+    while cube[5,5]!="D9":
         do_rotations(["L'","U'","L","U"])
 
 
