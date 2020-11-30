@@ -1,15 +1,15 @@
-from rubik import main as rubik
+import rubik
 import warnings
 from os import system
 import random
+import rubik_robot
 warnings.filterwarnings("ignore")
 
-for _ in range(1000):
+for _ in range(100):
     system("clear")
     print(_,"********************************")
-    # rubik.solve()#generate default 100 length
-    rubik.solve(rubik.make_combination(random.randint(0,100)))
-    rubik.draw()
+    rubik.solve()#generate default 100 length
+    # rubik.solve(rubik.make_combination(random.randint(0,100)))
 
     assert(rubik.cube[3,4 ]=="D2")
     assert(rubik.cube[4,3 ]=="D4")  
@@ -35,7 +35,6 @@ for _ in range(1000):
     assert(rubik.cube[11,3]=="U7")  
     assert(rubik.cube[11,4]=="U8")
     assert(rubik.cube[11,5]=="U9")
-    break
 
 
 
