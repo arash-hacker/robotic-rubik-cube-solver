@@ -116,8 +116,6 @@ def conv(y,x):
     rot = rot.get(xy,rot.get(-1)) or 0
     return (face,rot)
 
-
-
 def trans_u2(face,rot):
     do_rotations([face+"'"]*rot)
     do_rotations(u2.config[face])
