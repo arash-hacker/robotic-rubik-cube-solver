@@ -4,7 +4,7 @@ import random
 from os import system
 from rubik_robot.robot import reverse_move, do_rotations
 warnings.filterwarnings("ignore")
-
+from config import u2,u4,u6,u8,u1,u3,u7,u9
 def draw():
     print()
     for row in cube:
@@ -119,13 +119,8 @@ def conv(y,x):
 
 
 def trans_u2(face,rot):
-    for _ in range(rot):
-        rotate(face+"'")
-    face == "B" and do_rotations(["B'","R'","U'"])
-    face == "R" and do_rotations(["U'","B'","R'","U'"])
-    face == "L" and do_rotations(["U","B'","R'","U'"])
-    face == "F" and do_rotations(["U","U","B'","R'","U'"])
-    face == "D" and do_rotations(["D'","R'","R'","U'"])
+    do_rotations([face+"'"]*rot)
+    do_rotations(u2.config[face])
     
 def trans_u4(face,rot):
     if face == "U":
@@ -134,37 +129,24 @@ def trans_u4(face,rot):
         return
     face =="B" and do_rotations(["U"]+([face+"'"]*rot)+["U'"])
     face != "B" and do_rotations(([face+"'"]*rot))
-    face == "D" and do_rotations(["D'","D'","L'","L'"])
-    face == "F" and do_rotations(["L'"])
-    face == "B" and do_rotations(["U'","U'","R'","U","U"])
-    face == "R" and do_rotations(["U'","F'","U"])
-    face == "L" and do_rotations(["L","L","F'","D'","L'","L'"])
-    face == "U" and do_rotations(["L","L","F'","D'","L'","L'"])  
+    do_rotations(u4.config[face])
 
 def trans_u6(face,rot):
-    
     if face == "U":
         rot==1 and do_rotations(["F","U","F'","U'"])
         return
     face =="B" and do_rotations(["U'"]+([face+"'"]*rot)+["U"])
     face =="L" and do_rotations(["U","U"]+([face+"'"]*rot)+["U'","U'"])
     face not in ["B","L"] and do_rotations([face+"'"]*rot)
-    face == "L" and do_rotations(["U","F","U'"])
-    face == "F" and do_rotations(["R"])
-    face == "D" and do_rotations(["D'","D'","R","R"])
-    face == "R" and do_rotations(["R","R","F","D","R","R"])
-    face == "B" and do_rotations(["U'","B'","B'","U","R'"])
+    do_rotations(u6.config[face])
+
 
 def trans_u8(face,rot):
     face =="B" and do_rotations(["U'","U'"]+([face+"'"]*rot)+["U","U"]) 
     face =="L" and do_rotations(["U"]+([face+"'"]*rot)+["U'"]) 
     face =="R" and do_rotations(["U'"]+([face+"'"]*rot)+["U"]) 
     face not in ["R","L","B"] and do_rotations([face+"'"]*rot)   
-    face == "D" and do_rotations(["F","F"])
-    face == "F" and do_rotations(["F'", "R'", "D'", "R", "F" ,"F"])
-    face == "B" and do_rotations(["D","L'","R","F","R'","L"])
-    face == "L" and do_rotations(["U","L'","U'","F"])
-    face == "R" and do_rotations(["U'","R'","U'","B","U","U"])
+    do_rotations(u8.config[face])
 
 
 def trans_u1(f,*args):
@@ -176,71 +158,19 @@ def trans_u1(f,*args):
             break
         xy=np.where(cube[faces[face][0],faces[face][1]]=="U1")
         y,x=xy[0][0],xy[1][0]
+
         if face=="U" :
             if  (y,x)==(0,0):
                 break
-            elif (y,x)==(0,2):
-                do_rotations(["R","D","R'"])
-                do_rotations(["U","B'","D","D","B","D","B'","D'","B","U'"])
+            do_rotations(u1.config[(y,x)])
+        do_rotations(u1.config.get((face,(y,x)),[]) )
 
-            elif (y,x)==(2,0):
-                do_rotations(["L","D'","L'"])
-
-            elif (y,x)==(2,2):
-                do_rotations(["R'","D'","R"])
-        elif y==0:
-            if face=="F" and x==2:
-                do_rotations(["F","D","F'"])
-            if face=="F" and x==0:
-                do_rotations(["L","D","L'"])
-            if face=="L" and x==2:
-                do_rotations(["L","D","L'"])
-            if face=="L" and x==0:
-                do_rotations(["B","D","B'"])
-            if face=="B" and x==2:
-                do_rotations(["B","D","B'"])
-            if face=="B" and x==0:
-                do_rotations(["R","D","R'"])
-            if face=="R" and x==2:
-                do_rotations(["R","D","R'"])
-            if face=="R" and x==0:
-                do_rotations(["F","D","F'"])
-        elif  y==2:
-            if face=="F" and x==2:
-                do_rotations(["D","D","F","D","F'"])
-            if face=="F" and x==0:
-                do_rotations(["D","F","D","F'"])
-            if face=="L" and x==2:
-                do_rotations(["D'","F","D","F'"])
-            if face=="L" and x==0:
-                do_rotations(["D","F","D","F'"])
-            if face=="R" and x==2:
-                do_rotations(["D","F","D","F'"])
-            if face=="R" and x==0:
-                do_rotations(["D","F","D","F'"])
-            if face=="B" and x==2:
-                do_rotations(["F","D","F'"])
-            if face=="B" and x==0:
-                do_rotations(["D","F","D","F'"])
-    if face=="D":
-        xy=np.where(cube=='U1') 
-        face,r=conv(xy[0][0],xy[1][0])
-
-        xy=np.where(cube[faces[face][0],faces[face][1]]=="U1")
-        y,x=xy[0][0],xy[1][0]
-        if (y,x) == (0,0) :
-            ...
-        if (y,x) == (0,2) :
-            do_rotations(["D'"])
-        if (y,x) == (2,0) :
-            do_rotations(["D"])
-        if (y,x) == (2,2) :
-            do_rotations(["D","D"])
-        do_rotations(["U","B'","D","D","B","D","B'","D'","B","U'"])
-        ...
-    #F D F'
-    #R' D2 R D R' D' R
-    ...
+    
+    xy=np.where(cube=='U1') 
+    face,r=conv(xy[0][0],xy[1][0])
+    xy=np.where(cube[faces[face][0],faces[face][1]]=="U1")
+    y,x=xy[0][0],xy[1][0]
+    do_rotations(u1.config.get((face,(y,x)),[]) )
 
 def trans_u3(f,*args):
     face=f
